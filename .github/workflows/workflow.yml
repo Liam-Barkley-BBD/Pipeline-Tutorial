@@ -7,7 +7,7 @@ on:
 
 env:
   AWS_REGION: eu-west-1
-  LAMBDA_FUNCTION_NAME: Liam-Barkley-Lambda-Function-Python
+  LAMBDA_FUNCTION_NAME: Liam-Barkley-Python-Jokes-LAMBDA_FUNC
 
 permissions:
   contents: write
