@@ -1,6 +1,12 @@
-from api import app
-from aws_lambda_wsgi import handler
+import json
 
-# Wrap Flask app with WSGI interface
 def lambda_handler(event, context):
-    return handler(app, event, context)
+
+    print("Received event: " + json.dumps(event, indent=2))
+
+    message = 'Hello from Lambda!'
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps({ 'message': message })
+    }
