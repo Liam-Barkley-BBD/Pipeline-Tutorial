@@ -45,26 +45,9 @@ jobs:
       - name: Zip the Lambda function
         run: zip function.zip lambda_function.py
 
-      - name: Check if Lambda function exists
-        id: check_lambda
+      - name: Deploy to Lambda
         run: |
-          if aws lambda get-function --function-name ${{ env.LAMBDA_FUNCTION_NAME }}; then
-            echo "::set-output name=lambda_exists::true"
-          else
-            echo "::set-output name=lambda_exists::false"
-          fi
-
-      - name: Update Lambda function
-        run: |
-          if [ "${{ steps.check_lambda.outputs.lambda_exists }}" == "true" ]; then
-            echo "Updating Lambda function..."
-            aws lambda update-function-code \
-              --function-name ${{ env.LAMBDA_FUNCTION_NAME }} \
-              --zip-file fileb://function.zip --publish
-          else
-            echo "Lambda function does not exist. Please create the Lambda function manually."
-            exit 1
-          fi
+          aws lambda update-function-code --function-name ${{ env.LAMBDA_FUNCTION_NAME }} --zip-file fileb://./function.zip
 
       - name: Clean up
         run: rm function.zip
